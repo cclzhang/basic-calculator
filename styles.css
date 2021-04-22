@@ -66,6 +66,10 @@ button {
   color: rgb(77, 88, 99);
 }
 
+.display, button {
+  border-radius: 3px;
+}
+
 .display {
   width: 249px;
   height: 50px;
