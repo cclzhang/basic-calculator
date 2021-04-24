@@ -1,13 +1,10 @@
 
 
-const myApp = {};
+const calcApp = {};
 
-myApp.btn = $("button")
-myApp.display = $("#numShown");
-myApp.dpNum = myApp.display[0].textContent;
+calcApp.clickHandler = function(){
 
-myApp.btn.on("click", function() {
-  let numChosen = this.textContent;
+  let btnClicked = this.textContent;
   let action = this.dataset.action;
 
   // if button is not a # or decimal
@@ -15,40 +12,39 @@ myApp.btn.on("click", function() {
     const dataAction = this.dataset.action;
     console.log(dataAction);
     if (action === 'clear') {
-      myApp.dpNum = '0';
-      myApp.display.html(myApp.dpNum);
+      calcApp.dpNum = '0';
+      calcApp.display.textContent = calcApp.dpNum;
     }
   } else {
     // if string currently displayed is not '0' OR the decimal btn is clicked
-    if (myApp.dpNum !== '0' || this.dataset.action) {
+    if (calcApp.dpNum.length >= 30) {
+      console.log("i am maxed out")
+    } else if (calcApp.dpNum !== '0' || this.dataset.action) {
       // change dpNum to 'dpNum' + '<button> content'
-      myApp.dpNum = myApp.dpNum + numChosen;
-      myApp.display.html(myApp.dpNum);
+      calcApp.dpNum = calcApp.dpNum + btnClicked;
+      calcApp.display.textContent = calcApp.dpNum;
     } else {
       // change dpNum to <button> content
-      myApp.dpNum = numChosen;
-      myApp.display.html(myApp.dpNum);
+      calcApp.dpNum = btnClicked;
+      calcApp.display.textContent = calcApp.dpNum;
     }
     // console.log(parseInt(newDpNum));
   }
 
-})
-
-const calcApp = {};
-
-calcApp.btnClick = function(){
-  console.log(this.textContent);
 }
+
 
 calcApp.btnFunc = function(){
   for (btn of calcApp.btns) {
-    btn.addEventListener('click', calcApp.btnClick);
+    btn.addEventListener('click', calcApp.clickHandler);
   }
 }
 
 calcApp.init = function(){
   calcApp.btns = document.getElementsByTagName('button');
   console.log(calcApp.btns);
+  calcApp.display = document.getElementById('numShown');
+  calcApp.dpNum = document.getElementById('numShown').textContent;
   calcApp.btnFunc();
 }
 
