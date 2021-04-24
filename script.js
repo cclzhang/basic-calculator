@@ -34,11 +34,22 @@ myApp.btn.on("click", function() {
 
 })
 
-// const changeNum = () => {
-//   myApp.display.textContent = "hello";
-//   console.log("hello")
-// }
+const calcApp = {};
 
-// myApp.btn.on("click", function () {
-//   changeNum();
-// })
+calcApp.btnClick = function(){
+  console.log(this.textContent);
+}
+
+calcApp.btnFunc = function(){
+  for (btn of calcApp.btns) {
+    btn.addEventListener('click', calcApp.btnClick);
+  }
+}
+
+calcApp.init = function(){
+  calcApp.btns = document.getElementsByTagName('button');
+  console.log(calcApp.btns);
+  calcApp.btnFunc();
+}
+
+calcApp.init();
