@@ -88,6 +88,15 @@ button {
   font-size: 2rem;
 }
 
+.display p {
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.display p::-webkit-scrollbar {
+  display: none;
+}
+
 .keys {
   width: max-content;
   display: grid;

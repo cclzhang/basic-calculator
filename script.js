@@ -16,9 +16,16 @@ calcApp.clickHandler = function(){
       calcApp.display.textContent = calcApp.dpNum;
     }
   } else {
+
+    if (calcApp.display.scrollWidth > calcApp.display.clientWidth) {
+      calcApp.display.scrollLeft = calcApp.display.scrollWidth;
+      console.log(calcApp.display.scrollLeft);
+      console.log(calcApp.display.scrollWidth);
+    }
+    
     // if string currently displayed is not '0' OR the decimal btn is clicked
     if (calcApp.dpNum.length >= 30) {
-      console.log("i am maxed out")
+      calcApp.display.textContent = calcApp.dpNum;
     } else if (calcApp.dpNum !== '0' || this.dataset.action) {
       // change dpNum to 'dpNum' + '<button> content'
       calcApp.dpNum = calcApp.dpNum + btnClicked;
@@ -28,11 +35,8 @@ calcApp.clickHandler = function(){
       calcApp.dpNum = btnClicked;
       calcApp.display.textContent = calcApp.dpNum;
     }
-    // console.log(parseInt(newDpNum));
   }
-
 }
-
 
 calcApp.btnFunc = function(){
   for (btn of calcApp.btns) {
@@ -46,6 +50,7 @@ calcApp.init = function(){
   calcApp.display = document.getElementById('numShown');
   calcApp.dpNum = document.getElementById('numShown').textContent;
   calcApp.btnFunc();
+  calcApp.scrolled = false;
 }
 
 calcApp.init();
