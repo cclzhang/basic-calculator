@@ -15,12 +15,18 @@ calcApp.clickHandler = function(){
       calcApp.dpNum = '0';
       calcApp.display.textContent = calcApp.dpNum;
     }
+    
+    if (this.className === 'mathSymbol') {
+      const nums = []
+      const num = nums.push(parseInt(calcApp.dpNum))
+      console.log(nums);
+      calcApp.display.textContent = calcApp.dpNum + " " + this.textContent + " ";
+    }
   } else {
 
+    // newly inputted numbers are always shown
     if (calcApp.display.scrollWidth > calcApp.display.clientWidth) {
       calcApp.display.scrollLeft = calcApp.display.scrollWidth;
-      console.log(calcApp.display.scrollLeft);
-      console.log(calcApp.display.scrollWidth);
     }
     
     // if string currently displayed is not '0' OR the decimal btn is clicked
@@ -49,8 +55,9 @@ calcApp.init = function(){
   console.log(calcApp.btns);
   calcApp.display = document.getElementById('numShown');
   calcApp.dpNum = document.getElementById('numShown').textContent;
+
   calcApp.btnFunc();
-  calcApp.scrolled = false;
+
 }
 
 calcApp.init();
