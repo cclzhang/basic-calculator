@@ -22,6 +22,9 @@ calcApp.clickHandler = function(){
       nums.push(num);
       console.log(nums);
       // calcApp.display.textContent = calcApp.dpNum + " " + this.textContent + " ";
+      if (this.dataset.action === 'plus') {
+        console.log(...nums);
+      }
     }
   } else {
 
