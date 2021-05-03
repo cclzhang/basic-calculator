@@ -3,50 +3,48 @@
 const calcApp = {};
 
 calcApp.clickHandler = function(){
-
+  
   let btnClicked = this.textContent;
   let action = this.dataset.action;
-  const nums = [];
 
-  // if button is not a # or decimal
-  if (action && action !== 'decimal') {
-    const dataAction = this.dataset.action;
-    console.log(dataAction);
-    if (action === 'clear') {
-      calcApp.dpNum = '0';
-      calcApp.display.textContent = calcApp.dpNum;
-    }
-    
-    if (this.className === 'mathSymbol') {
-      const num = parseInt(calcApp.dpNum)
-      nums.push(num);
-      console.log(nums);
-      // calcApp.display.textContent = calcApp.dpNum + " " + this.textContent + " ";
-      if (this.dataset.action === 'plus') {
-        console.log(...nums);
-      }
-    }
-  } else {
+  // display cap is 30
+  if (calcApp.curNum.length >= 30) {
+    return;
+  }
+  
+  // newly inputted numbers are always shown
+  if (calcApp.display.scrollWidth > calcApp.display.clientWidth) {
+    calcApp.display.scrollLeft = calcApp.display.scrollWidth;
+  }
+  
 
-    // newly inputted numbers are always shown
-    if (calcApp.display.scrollWidth > calcApp.display.clientWidth) {
-      calcApp.display.scrollLeft = calcApp.display.scrollWidth;
-    }
+  // if the button clicked is clear
+  if (action === 'clear') {
+    calcApp.curNum = '';
+    calcApp.nums = [];
+    calcApp.display.textContent = calcApp.curNum;
+  } else if (this.className === 'mathSymbol') {
+    calcApp.nums.push(parseFloat(calcApp.curNum));
+    console.log(calcApp.nums);
+    calcApp.display.textContent += " " + this.textContent + " ";
     
-    // display cap is 30
-    if (calcApp.dpNum.length >= 30) {
-      calcApp.display.textContent = calcApp.dpNum;
+    calcApp.curNum = "";
+    // if (this.dataset.action === 'plus') {
+      //   console.log(...nums);
+      // }
+      
+  // if button is not a # or  decimal
+  } else if (!action || action === 'decimal') {
+    
     // if string currently displayed is not '0' OR the decimal btn is clicked
-    // } else if (nums) {
-    //   console.log('test');
-    } else if (calcApp.dpNum !== '0' || this.dataset.action) {
-      // change dpNum to 'dpNum' + '<button> content'
-      calcApp.dpNum = calcApp.dpNum + btnClicked;
-      calcApp.display.textContent = calcApp.dpNum;
+    if (calcApp.display.textContent !== '0' || this.dataset.action) {
+      // change curNum to 'curNum' + '<button> content'
+      calcApp.curNum += btnClicked;
+      calcApp.display.textContent += btnClicked;
     } else {
-      // change dpNum to <button> content
-      calcApp.dpNum = btnClicked;
-      calcApp.display.textContent = calcApp.dpNum;
+      // change curNum to <button> content
+      calcApp.curNum = btnClicked;
+      calcApp.display.textContent = btnClicked;
     }
   }
 }
@@ -61,9 +59,10 @@ calcApp.init = function(){
   calcApp.btns = document.getElementsByTagName('button');
   console.log(calcApp.btns);
   calcApp.display = document.getElementById('numShown');
-  calcApp.dpNum = document.getElementById('numShown').textContent
+  calcApp.curNum = document.getElementById('numShown').textContent
   calcApp.btnFunc();
-
+  calcApp.nums = [];
+  
 }
 
 calcApp.init();
