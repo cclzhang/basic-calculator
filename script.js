@@ -36,8 +36,41 @@ calcApp.clickHandler = function(){
     console.log(btnClicked);
 
   } else if (action === 'plusMinus') {
-    console.log(btnClicked);
-    
+    // console.log(calcApp.operators);
+    let curOp = '';
+    if (calcApp.curNum[0] === '-') {
+      calcApp.curNum = calcApp.curNum.substring(1);
+      curOp = '-';
+      checkOperator();
+    } else {
+      calcApp.curNum = '-' + calcApp.curNum;
+      curOp = '+';
+      checkOperator();
+    }
+    // if (calcApp.operators.length > 0 && calcApp.operators[calcApp.operators.length - 1] === calcApp.curNum[0]) {
+    //   calcApp.operators.splice((calcApp.operators.length - 1), 1, '+')
+    //   console.log(calcApp.operators);
+    // } else {
+    //   calcApp.operators.splice((calcApp.operators.length - 1), 1, '-');
+    //   console.log(calcApp.operators);
+    // }
+
+    function checkOperator(){
+      if (calcApp.operators.length > 0) {
+        if (calcApp.operators[calcApp.operators.length - 1] !== calcApp.curNum[0]) {
+          calcApp.operators.splice((calcApp.operators.length - 1), 1, '-');
+          console.log(calcApp.operators);
+        } else {
+          calcApp.operators.splice((calcApp.operators.length - 1), 1, '+')
+          console.log(calcApp.operators);
+        }
+      } else {
+        return;
+      }
+    }
+
+    console.log(calcApp.curNum);
+    console.log(parseFloat(calcApp.curNum));
 
   } else if (this.className === 'mathSymbol') {
     calcApp.operators.push(btnClicked);
