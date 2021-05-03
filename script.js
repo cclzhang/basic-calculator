@@ -20,10 +20,27 @@ calcApp.clickHandler = function(){
 
   // if the button clicked is clear
   if (action === 'clear') {
-    calcApp.curNum = '';
+    calcApp.curNum = "r";
     calcApp.nums = [];
-    calcApp.display.textContent = calcApp.curNum;
+    calcApp.operators = [];
+    calcApp.display.textContent = '0';
+
+  } else if (action === 'calculate') {
+    console.log(btnClicked);
+    const result = calcApp.calculate();
+    calcApp.display.textContent = result;
+    calcApp.nums = [result];
+    calcApp.curNum = 'r';
+
+  } else if (action === 'percent') {
+    console.log(btnClicked);
+
+  } else if (action === 'plusMinus') {
+    console.log(btnClicked);
+    
+
   } else if (this.className === 'mathSymbol') {
+    calcApp.operators.push(btnClicked);
     calcApp.nums.push(parseFloat(calcApp.curNum));
     console.log(calcApp.nums);
     calcApp.display.textContent += " " + this.textContent + " ";
@@ -37,14 +54,15 @@ calcApp.clickHandler = function(){
   } else if (!action || action === 'decimal') {
     
     // if string currently displayed is not '0' OR the decimal btn is clicked
-    if (calcApp.display.textContent !== '0' || this.dataset.action) {
-      // change curNum to 'curNum' + '<button> content'
-      calcApp.curNum += btnClicked;
-      calcApp.display.textContent += btnClicked;
-    } else {
+    if (calcApp.curNum === 'r' && !action) {
       // change curNum to <button> content
       calcApp.curNum = btnClicked;
       calcApp.display.textContent = btnClicked;
+      console.log('hi')
+    } else {
+      // change curNum to 'curNum' + '<button> content'
+      calcApp.curNum += btnClicked;
+      calcApp.display.textContent += btnClicked;
     }
   }
 }
@@ -55,14 +73,20 @@ calcApp.btnFunc = function(){
   }
 }
 
+calcApp.calculate = function(){
+  return 2;
+}
+
 calcApp.init = function(){
+  // variables
   calcApp.btns = document.getElementsByTagName('button');
-  console.log(calcApp.btns);
   calcApp.display = document.getElementById('numShown');
-  calcApp.curNum = document.getElementById('numShown').textContent
-  calcApp.btnFunc();
+  calcApp.curNum = 'r';
   calcApp.nums = [];
+  calcApp.operators = [];
   
+  // functions
+  calcApp.btnFunc();
 }
 
 calcApp.init();
