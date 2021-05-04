@@ -37,51 +37,59 @@ calcApp.clickHandler = function(){
 
   } else if (action === 'plusMinus') {
     // console.log(calcApp.operators);
-    let curOp = '';
+    
     if (calcApp.curNum[0] === '-') {
       calcApp.curNum = calcApp.curNum.substring(1);
-      curOp = '-';
-      checkOperator();
+      calcApp.curOp = '-';
+      changeDpOperator();
     } else {
       calcApp.curNum = '-' + calcApp.curNum;
-      curOp = '+';
-      checkOperator();
+      calcApp.curOp = '+';
+      changeDpOperator();
     }
-    // if (calcApp.operators.length > 0 && calcApp.operators[calcApp.operators.length - 1] === calcApp.curNum[0]) {
-    //   calcApp.operators.splice((calcApp.operators.length - 1), 1, '+')
-    //   console.log(calcApp.operators);
-    // } else {
-    //   calcApp.operators.splice((calcApp.operators.length - 1), 1, '-');
-    //   console.log(calcApp.operators);
-    // }
 
-    function checkOperator(){
-      if (calcApp.operators.length > 0) {
-        if (calcApp.operators[calcApp.operators.length - 1] !== calcApp.curNum[0]) {
-          calcApp.operators.splice((calcApp.operators.length - 1), 1, '-');
-          console.log(calcApp.operators);
-        } else {
-          calcApp.operators.splice((calcApp.operators.length - 1), 1, '+')
-          console.log(calcApp.operators);
-        }
-      } else {
+    // function to change the displayed operators
+    function changeDpOperator(){
+      if (calcApp.dpOperators.length < 1) {
         return;
       }
+
+      const lastOp = calcApp.dpOperators.length - 1;
+
+      if (calcApp.dpOperators[lastOp] === calcApp.curNum[0]) {
+        calcApp.dpOperators.splice(lastOp, 1, '+')
+        reprintOperator();
+      } else if (calcApp.dpOperators[lastOp] === '÷' || calcApp.dpOperators[lastOp] === '×') {
+        return;
+      } else {
+        calcApp.dpOperators.splice(lastOp, 1, '-');
+        reprintOperator();
+      }
+
+      // console.log(calcApp.dpArray);
     }
 
-    console.log(calcApp.curNum);
+    function reprintOperator(){
+      console.log(`real: ${calcApp.operators} | display: ${calcApp.dpOperators}`);
+      // calcApp.display.textContent = ;
+      // calcApp.dpOperators.map()
+    }
+
+
+
     console.log(parseFloat(calcApp.curNum));
+
 
   } else if (this.className === 'mathSymbol') {
     calcApp.operators.push(btnClicked);
+    calcApp.dpOperators.push(btnClicked);
     calcApp.nums.push(parseFloat(calcApp.curNum));
-    console.log(calcApp.nums);
+
+    console.log(calcApp.nums, calcApp.operators);
+
     calcApp.display.textContent += " " + this.textContent + " ";
     
     calcApp.curNum = "";
-    // if (this.dataset.action === 'plus') {
-      //   console.log(...nums);
-      // }
       
   // if button is not a # or  decimal
   } else if (!action || action === 'decimal') {
@@ -117,9 +125,17 @@ calcApp.init = function(){
   calcApp.curNum = 'r';
   calcApp.nums = [];
   calcApp.operators = [];
+  calcApp.dpOperators = [];
+  calcApp.curOp = '';
   
   // functions
   calcApp.btnFunc();
+
+
+
+  calcApp.dpArray = calcApp.nums.map((value) => {
+    return value;
+  });
 }
 
 calcApp.init();
