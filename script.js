@@ -18,13 +18,14 @@ calcApp.clickHandler = function(){
   }
   
 
-  // if the button clicked is clear
+  // if AC button is clicked
   if (action === 'clear') {
     calcApp.curNum = "r";
     calcApp.nums = [];
     calcApp.operators = [];
     calcApp.display.textContent = '0';
 
+  // if = button is clicked
   } else if (action === 'calculate') {
     console.log(btnClicked);
     const result = calcApp.calculate();
@@ -32,16 +33,20 @@ calcApp.clickHandler = function(){
     calcApp.nums = [result];
     calcApp.curNum = 'r';
 
+  // if % button is clicked
   } else if (action === 'percent') {
     console.log(btnClicked);
 
   } else if (action === 'plusMinus') {
     // console.log(calcApp.operators);
     
+    // if string number is already a negative
     if (calcApp.curNum[0] === '-') {
       calcApp.curNum = calcApp.curNum.substring(1);
       calcApp.curOp = '-';
       changeDpOperator();
+    
+    // if string number is positive
     } else {
       calcApp.curNum = '-' + calcApp.curNum;
       calcApp.curOp = '+';
@@ -69,6 +74,7 @@ calcApp.clickHandler = function(){
       // console.log(calcApp.dpArray);
     }
 
+    // reprint the display with the operator changed visually
     function reprintOperator(){
       console.log(`real: ${calcApp.operators} | display: ${calcApp.dpOperators}`);
       // calcApp.display.textContent = ;
@@ -79,7 +85,7 @@ calcApp.clickHandler = function(){
 
     console.log(parseFloat(calcApp.curNum));
 
-
+  // if + - × ÷ was clicked
   } else if (this.className === 'mathSymbol') {
     calcApp.operators.push(btnClicked);
     calcApp.dpOperators.push(btnClicked);
@@ -91,7 +97,7 @@ calcApp.clickHandler = function(){
     
     calcApp.curNum = "";
       
-  // if button is not a # or  decimal
+  // if a number button or the decimal button is clicked
   } else if (!action || action === 'decimal') {
     
     // if string currently displayed is not '0' OR the decimal btn is clicked
