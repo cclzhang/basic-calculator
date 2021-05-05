@@ -35,32 +35,15 @@ calcApp.clickHandler = function(){
 
   // if % button is clicked
   } else if (action === 'percent') {
-    calcApp.isPercent = false;
+    calcApp.curNum = parseInt(calcApp.curNum)/Math.pow(100,1);
 
-    if (calcApp.isPercent) {
-      let str = calcApp.display.textContent;
-      let newStr = str.substring(str.length - 1);
-      console.log(str);
-      // calcApp.display.textContent = ;
-      calcApp.curNum = calcApp.curNum*Math.pow(100, 1);
-      console.log('take away percent', calcApp.curNum);
-      calcApp.isPercent = false;
-    } else {
+    if (!Number.isInteger(calcApp.curNum)) {
       calcApp.display.textContent += btnClicked;
-      calcApp.curNum = parseInt(calcApp.curNum)/Math.pow(100,1);
-      console.log('add percent', calcApp.curNum);
-      calcApp.isPercent = true;
     }
+    
+    console.log('add percent', calcApp.curNum);
 
-    // if(calcApp.curNum.length === 1) {
-
-      
-    // } else if(calcApp.curNum.length === 2){
-    //   console.log('2 digits');
-    // } else {
-    //   console.log('3+ digits');
-    // }
-
+  // if +/- btn is clicked
   } else if (action === 'plusMinus') {
     // console.log(calcApp.operators);
     
