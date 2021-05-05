@@ -35,7 +35,28 @@ calcApp.clickHandler = function(){
 
   // if % button is clicked
   } else if (action === 'percent') {
-    console.log(btnClicked);
+    calcApp.isPercent = false;
+    
+    if (calcApp.isPercent) {
+      // calcApp.display.textContent += btnClicked;
+      calcApp.curNum *= Math.pow(100, 1);
+      console.log('take away percent', calcApp.curNum);
+      calcApp.isPercent = false;
+    } else {
+      // calcApp.display.textContent /= btnClicked;
+      calcApp.curNum = parseInt(calcApp.curNum)/Math.pow(100,1);
+      console.log('add percent', calcApp.curNum);
+      calcApp.isPercent = true;
+    }
+
+    // if(calcApp.curNum.length === 1) {
+
+      
+    // } else if(calcApp.curNum.length === 2){
+    //   console.log('2 digits');
+    // } else {
+    //   console.log('3+ digits');
+    // }
 
   } else if (action === 'plusMinus') {
     // console.log(calcApp.operators);
