@@ -20,10 +20,15 @@ calcApp.clickHandler = function(){
 
   // if AC button is clicked
   if (action === 'clear') {
-    calcApp.curNum = "r";
-    calcApp.nums = [];
-    calcApp.operators = [];
-    calcApp.display.textContent = '0';
+    if (this.textContent === 'C'){
+      calcApp.display.textContent = 'surprise'; 
+      this.textContent = 'AC';
+    } else {
+      calcApp.curNum = "r";
+      calcApp.nums = [];
+      calcApp.operators = [];
+      calcApp.display.textContent = '0';
+    }
 
   // if = button is clicked
   } else if (action === 'calculate') {
@@ -113,6 +118,7 @@ calcApp.clickHandler = function(){
       calcApp.curNum = btnClicked;
       calcApp.display.textContent = btnClicked;
       console.log('hi')
+      calcApp.clearBtn.textContent = 'C';
     } else {
       // change curNum to 'curNum' + '<button> content'
       calcApp.curNum += btnClicked;
@@ -140,6 +146,7 @@ calcApp.init = function(){
   calcApp.operators = [];
   calcApp.dpOperators = [];
   calcApp.curOp = '';
+  calcApp.clearBtn = document.querySelector('[data-action=clear]');
   
   // functions
   calcApp.btnFunc();
