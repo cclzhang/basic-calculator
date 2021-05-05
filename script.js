@@ -36,14 +36,17 @@ calcApp.clickHandler = function(){
   // if % button is clicked
   } else if (action === 'percent') {
     calcApp.isPercent = false;
-    
+
     if (calcApp.isPercent) {
-      // calcApp.display.textContent += btnClicked;
-      calcApp.curNum *= Math.pow(100, 1);
+      let str = calcApp.display.textContent;
+      let newStr = str.substring(str.length - 1);
+      console.log(str);
+      // calcApp.display.textContent = ;
+      calcApp.curNum = calcApp.curNum*Math.pow(100, 1);
       console.log('take away percent', calcApp.curNum);
       calcApp.isPercent = false;
     } else {
-      // calcApp.display.textContent /= btnClicked;
+      calcApp.display.textContent += btnClicked;
       calcApp.curNum = parseInt(calcApp.curNum)/Math.pow(100,1);
       console.log('add percent', calcApp.curNum);
       calcApp.isPercent = true;
