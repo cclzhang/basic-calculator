@@ -127,6 +127,7 @@ calcApp.clickHandler = function(){
   }
 }
 
+// listen for button clicks
 calcApp.btnFunc = function(){
   for (btn of calcApp.btns) {
     btn.addEventListener('click', calcApp.clickHandler);
@@ -135,6 +136,22 @@ calcApp.btnFunc = function(){
 
 calcApp.calculate = function(){
   return 2;
+}
+
+calcApp.add = function(n1, n2){
+  return n1 + n2;
+}
+
+calcApp.subtract = function (n1, n2) {
+  return n1 - n2;
+}
+
+calcApp.multiply = function (n1, n2) {
+  return n1 * n2;
+}
+
+calcApp.divide = function (n1, n2) {
+  return n1 / n2;
 }
 
 calcApp.init = function(){
@@ -148,9 +165,9 @@ calcApp.init = function(){
   calcApp.curOp = '';
   calcApp.clearBtn = document.querySelector('[data-action=clear]');
   
-  // functions
+  // call functions
   calcApp.btnFunc();
-
+  console.log(calcApp.add(3,3), calcApp.subtract(3,3), calcApp.multiply(3,3), calcApp.divide(3,3));
 
 
   calcApp.dpArray = calcApp.nums.map((value) => {
