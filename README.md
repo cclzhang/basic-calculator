@@ -1,4 +1,4 @@
-<h2>License<h2>
+<h2>License</h2>
 
 <p>Copyright &copy; 2021 Cecile Zhang
 
