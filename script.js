@@ -154,6 +154,15 @@ calcApp.divide = function (n1, n2) {
   return n1 / n2;
 }
 
+calcApp.toString = function () {
+  console.log('save to a variable/array');
+}
+
+calcApp.print = function(){
+  console.log('display string variable/array onto the page')
+}
+
+
 calcApp.init = function(){
   // variables
   calcApp.btns = document.getElementsByTagName('button');
