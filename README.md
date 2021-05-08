@@ -1,6 +1,7 @@
 # A Simple Calculator
 
 <p>A modern calculator to solve your modern needs. Written in vanilla JavaScript, this app provides basic calculator functionality while providing a sleek and minimalist look.
+<img src="./assets/calculator-image.png" alt="image of the calculator">
   
 <h2>Features</h2>
 <ul>
