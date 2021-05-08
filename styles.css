@@ -26,12 +26,14 @@ body {
   flex-direction: column;
   min-height: 100vh;
   font-weight: 800;
+
+  touch-action:manipulation;
 }
 
 main {
   background: slategray;
   flex: 2;
-  padding: 5px 0 10px;
+  padding: 20px 0;
   height: max-content;
   display:flex;
   flex-direction: column;
@@ -39,7 +41,11 @@ main {
 }
 
 h1 {
+  font-size: 3.3rem;
   margin: 0;
+  text-shadow: 4px 4px rgba(255, 255, 255, 0.30);
+  margin-bottom: 5px;
+  letter-spacing: 1.7px;
 }
 
 li {
@@ -82,10 +88,19 @@ button {
   font-size: 2rem;
 }
 
+.display p {
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.display p::-webkit-scrollbar {
+  display: none;
+}
+
 .keys {
   width: max-content;
   display: grid;
-  grid-template-rows: repeat(5, 57px);
+  grid-template-rows: repeat(5, 50px);
   grid-template-columns: repeat(4, 57px);
   gap: 7px;
 }
