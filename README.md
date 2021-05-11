@@ -1,17 +1,16 @@
 # A Simple Calculator
 
-<p>A modern calculator to solve your modern needs. Written in vanilla JavaScript, this app provides basic calculator functionality while providing a sleek and minimalist look.
-<img src="./assets/calculator-image.png" alt="image of the calculator">
+A modern calculator to solve your modern needs. Written in vanilla JavaScript, this app provides basic calculator functionality while providing a sleek and minimalist look.
+
+![image of the calculator](./assets/calculator-image.png)
   
-<h2>Features</h2>
-<ul>
-  <li>Offers basic operations and displays all commands as they are entered</li>
-  <li>Ability to change displayed value from positive to negative and vice versa</li>
-  <li>Can immediately calculate the percentage from the displayed value and use value in further operations</li>
-</ul>
+## Features
++ Offers basic operations and displays all commands as they are entered
++ Ability to change displayed value from positive to negative and vice versa
++ Can immediately calculate the percentage from the displayed value and use value in further operations
 
-<h2>License</h2>
+## License
 
-<p>Copyright &copy; 2021 Cecile Zhang. All rights reserved.</p>
+Copyright &copy; Cecile Zhang. All rights reserved.
 
-<p>Licensed under the <a href="./LICENSE">MIT License.</a></p>
+Licensed under the [MIT License](./LICENSE).
