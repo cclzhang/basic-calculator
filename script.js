@@ -61,27 +61,27 @@ calcApp.clickHandler = function(){
     
   } else if (action === 'percent') {
   // if % button is clicked
-
-    console.log(btnClicked);
     calcApp.clearBtn.textContent = 'C';
-    let newNum = calcApp.curNum/Math.pow(100,1);
-    calcApp.curNum = newNum;
-    let displayNum = calcApp.curNum * Math.pow(100, 1)
 
-    if (calcApp.isPercent) {
-      // calcApp.display.textContent = displayNum + btnClicked;
-    } else {
-      calcApp.display.textContent += btnClicked;
-    }
+    // change curNum and dpNum to their percent equivalents
+    let newPercentNum = calcApp.curNum/Math.pow(100,1);
+    calcApp.curNum = newPercentNum;
+    let dpPercentNum = calcApp.curNum * Math.pow(100, 1);
 
-    // console.log(calcApp.curNum, otherNum);
-    // if (!Number.isInteger(calcApp.curNum)) {
-    //   calcApp.display.textContent += btnClicked;
-    // }
-
-    console.log(calcApp.curNum);
+    let lastIndex = calcApp.display.textContent.length - 1;
     
-    calcApp.isPercent = true;
+    // if displayed num has no percent add a percent to the display
+    if (calcApp.display.textContent[lastIndex] !== '%') {
+      calcApp.display.textContent += btnClicked;
+
+    } else if (calcApp.display.textContent[lastIndex] === '%') {
+      // if displayed num already has a percent, show current dp num moved by 2 decimal places
+      let curDisplay = calcApp.display.textContent.split(" ");
+      curDisplay.splice(-1);
+      let newDisplay = curDisplay.join(" ");
+      calcApp.display.textContent = newDisplay + " " + dpPercentNum + btnClicked;
+    }
+    
   } else if (action === 'plusMinus') {
   // if +/- btn is clicked
     console.log(calcApp.nums);
@@ -199,29 +199,6 @@ calcApp.calculate = function(num, op){
     } 
   }
 
-  // if (result % 1 != 0 && ) {
-  //   result = result.toFixed(3);
-  // }
-
-  const decimalCount = number => {
-    // Convert to String
-    const numStr = String(number);
-    // String Contains Decimal
-    if (numStr.includes('.')) {
-      return numStr.split('.')[1].length;
-    };
-    // String Does Not Contain Decimal
-    return 0;
-  }
-
-  if (decimalCount(result) > 3) {
-    result = result.toFixed(3);
-  }
-  // console.log(calcApp.operators);
-  // let array = calcApp.operators.splice(2, 3);
-  // console.log(array);
-  // console.log(calcApp.operators);
-
   return result;
 }
 
@@ -244,7 +221,7 @@ calcApp.init = function(){
   // other variables
   calcApp.isDecimal = false;
   calcApp.curNum = 'r';
-  
+
   calcApp.nums = [];
   calcApp.operators = [];
   // calcApp.dpOperators = [];
