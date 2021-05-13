@@ -244,6 +244,7 @@ calcApp.init = function(){
   // other variables
   calcApp.isDecimal = false;
   calcApp.curNum = 'r';
+  
   calcApp.nums = [];
   calcApp.operators = [];
   // calcApp.dpOperators = [];
