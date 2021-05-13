@@ -92,6 +92,7 @@ button {
   overflow-x: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  white-space: nowrap;
 }
 .display p::-webkit-scrollbar {
   display: none;

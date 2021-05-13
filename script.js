@@ -20,9 +20,22 @@ calcApp.clickHandler = function(){
 
   // if AC button is clicked
   if (action === 'clear') {
+
     if (this.textContent === 'C'){
-      calcApp.display.textContent = 'surprise'; 
+      let curDisplay = calcApp.display.textContent.split(" ");
+
+      if (curDisplay[curDisplay.length - 1]){
+        curDisplay.splice(-1);
+        calcApp.curNum = "";
+      } else{
+        curDisplay.splice(-2);
+        calcApp.operators.pop();
+      }
+
+      let newDisplay = curDisplay.join(" ");
+      calcApp.display.textContent = newDisplay + " ";
       this.textContent = 'AC';
+
     } else {
       calcApp.curNum = "r";
       calcApp.nums = [];
@@ -30,41 +43,62 @@ calcApp.clickHandler = function(){
       calcApp.display.textContent = '0';
     }
 
-  // if = button is clicked
   } else if (action === 'calculate') {
-    console.log(btnClicked);
-    const result = calcApp.calculate();
-    calcApp.display.textContent = result;
-    calcApp.nums = [result];
-    calcApp.curNum = 'r';
+  // if = button is clicked
+    calcApp.nums.push(parseFloat(calcApp.curNum));
+    console.log(calcApp.nums, calcApp.operators);
 
-  // if % button is clicked
+    calcApp.calculate(calcApp.nums, calcApp.operators);
+    calcApp.result = calcApp.calculate(calcApp.nums, calcApp.operators);
+
+    calcApp.display.textContent = calcApp.result;
+    calcApp.nums = [];
+    calcApp.operators = [];
+
+    // clear
+    calcApp.curNum = calcApp.result;
+    calcApp.clearBtn.textContent = 'AC';
+    
   } else if (action === 'percent') {
-    calcApp.curNum = parseInt(calcApp.curNum)/Math.pow(100,1);
+  // if % button is clicked
+    calcApp.clearBtn.textContent = 'C';
 
-    if (!Number.isInteger(calcApp.curNum)) {
+    // change curNum and dpNum to their percent equivalents
+    let newPercentNum = calcApp.curNum/Math.pow(100,1);
+    calcApp.curNum = newPercentNum;
+    let dpPercentNum = calcApp.curNum * Math.pow(100, 1);
+
+    let lastIndex = calcApp.display.textContent.length - 1;
+    
+    // if displayed num has no percent add a percent to the display
+    if (calcApp.display.textContent[lastIndex] !== '%') {
       calcApp.display.textContent += btnClicked;
+
+    } else if (calcApp.display.textContent[lastIndex] === '%') {
+      // if displayed num already has a percent, show current dp num moved by 2 decimal places
+      let curDisplay = calcApp.display.textContent.split(" ");
+      curDisplay.splice(-1);
+      let newDisplay = curDisplay.join(" ");
+      calcApp.display.textContent = newDisplay + " " + dpPercentNum + btnClicked;
     }
     
-    console.log('add percent', calcApp.curNum);
-
-  // if +/- btn is clicked
   } else if (action === 'plusMinus') {
+  // if +/- btn is clicked
+    console.log(calcApp.nums);
     // console.log(calcApp.operators);
-    
+    calcApp.clearBtn.textContent = 'C';
     // if string number is already a negative
     if (calcApp.curNum[0] === '-') {
       calcApp.curNum = calcApp.curNum.substring(1);
       calcApp.curOp = '-';
-      changeDpOperator();
     
     // if string number is positive
     } else {
       calcApp.curNum = '-' + calcApp.curNum;
       calcApp.curOp = '+';
-      changeDpOperator();
     }
 
+    /*
     // function to change the displayed operators
     function changeDpOperator(){
       if (calcApp.dpOperators.length < 1) {
@@ -84,7 +118,6 @@ calcApp.clickHandler = function(){
       }
 
       // console.log(calcApp.dpArray);
-    }
 
     // reprint the display with the operator changed visually
     function reprintOperator(){
@@ -92,37 +125,58 @@ calcApp.clickHandler = function(){
       // calcApp.display.textContent = ;
       // calcApp.dpOperators.map()
     }
+    */
 
 
 
-    console.log(parseFloat(calcApp.curNum));
+    // console.log(parseFloat(calcApp.curNum));
 
-  // if + - × ÷ was clicked
   } else if (this.className === 'mathSymbol') {
+  // if + - × ÷ was clicked
+    calcApp.clearBtn.textContent = 'C';
     calcApp.operators.push(btnClicked);
-    calcApp.dpOperators.push(btnClicked);
-    calcApp.nums.push(parseFloat(calcApp.curNum));
 
-    console.log(calcApp.nums, calcApp.operators);
+    if (calcApp.curNum) {
+      calcApp.nums.push(parseFloat(calcApp.curNum));
+    }
+
+    // console.log(calcApp.nums, calcApp.operators);
 
     calcApp.display.textContent += " " + this.textContent + " ";
-    
     calcApp.curNum = "";
       
-  // if a number button or the decimal button is clicked
   } else if (!action || action === 'decimal') {
-    
+  // if a number button or the decimal button is clicked
+    calcApp.clearBtn.textContent = 'C';
+
     // if string currently displayed is not '0' OR the decimal btn is clicked
-    if (calcApp.curNum === 'r' && !action) {
+    if (action && calcApp.isDecimal) {
+      return;
+    }
+    
+    if (calcApp.curNum === 'r' && !action || calcApp.curNum === calcApp.result) {
       // change curNum to <button> content
       calcApp.curNum = btnClicked;
       calcApp.display.textContent = btnClicked;
-      console.log('hi')
-      calcApp.clearBtn.textContent = 'C';
+      console.log(calcApp.curNum);
+
+    } else if (action && calcApp.curNum === 'r') {
+        calcApp.isDecimal = true;
+        calcApp.curNum = '0' + btnClicked;
+        calcApp.display.textContent += btnClicked;
+
+    } else if (action && !calcApp.curNum) {
+        calcApp.isDecimal = true;
+        calcApp.curNum = '0' + btnClicked;
+        calcApp.display.textContent += "0" + btnClicked;
+        console.log(calcApp.curNum);
+
     } else {
       // change curNum to 'curNum' + '<button> content'
       calcApp.curNum += btnClicked;
       calcApp.display.textContent += btnClicked;
+
+      console.log(calcApp.curNum);
     }
   }
 }
@@ -134,41 +188,48 @@ calcApp.btnFunc = function(){
   }
 }
 
-calcApp.calculate = function(){
-  return 2;
+calcApp.calculate = function(num, op){
+  let result = num[0];
+  for (i = 0; i < op.length; i++){
+    switch (op[i]) {
+      case "+": result += num[i + 1]; break;
+      case "-": result -= num[i + 1]; break;
+      case "×": result *= num[i + 1]; break;
+      case "÷": result /= num[i + 1]; break;
+    } 
+  }
+
+  return result;
 }
 
-calcApp.add = function(n1, n2){
-  return n1 + n2;
+// calcApp.toDisplay = function (...items) {
+//   calcApp.displayBox = items;
+//   console.log(calcApp.displayBox);
+// }
+
+calcApp.print = function(){
+  console.log('display string variable/array onto the page')
 }
 
-calcApp.subtract = function (n1, n2) {
-  return n1 - n2;
-}
-
-calcApp.multiply = function (n1, n2) {
-  return n1 * n2;
-}
-
-calcApp.divide = function (n1, n2) {
-  return n1 / n2;
-}
 
 calcApp.init = function(){
-  // variables
+  // html itmes
   calcApp.btns = document.getElementsByTagName('button');
   calcApp.display = document.getElementById('numShown');
+  calcApp.clearBtn = document.querySelector('[data-action=clear]');
+  
+  // other variables
+  calcApp.isDecimal = false;
   calcApp.curNum = 'r';
+
   calcApp.nums = [];
   calcApp.operators = [];
-  calcApp.dpOperators = [];
+  // calcApp.dpOperators = [];
   calcApp.curOp = '';
-  calcApp.clearBtn = document.querySelector('[data-action=clear]');
+  // calcApp.result = 'r';
   
   // call functions
   calcApp.btnFunc();
-  console.log(calcApp.add(3,3), calcApp.subtract(3,3), calcApp.multiply(3,3), calcApp.divide(3,3));
-
 
   calcApp.dpArray = calcApp.nums.map((value) => {
     return value;
