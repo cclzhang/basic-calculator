@@ -188,12 +188,10 @@ calcApp.changeTheme = function(){
 
   console.log(numDisplay);
   if (this.className === 'sun'){
-    console.log(this);
     this.innerHTML = `
     <img src="./assets/moon.png" alt="a simple moon icon">
     `;
   } else {
-    console.log(this);
     this.innerHTML = `
     <img src="./assets/sun.svg" alt="a simple sun icon">
     `;
