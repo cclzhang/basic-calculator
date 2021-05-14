@@ -63,12 +63,21 @@ calcApp.clickHandler = function(){
   // if % button is clicked
     calcApp.clearBtn.textContent = 'C';
 
+    if (calcApp.curNum === 'r') {
+      calcApp.curNum = 0;
+    }
+
+    if (!calcApp.curNum) {
+      return;
+    }
+    console.log(calcApp.curNum);
     // change curNum and dpNum to their percent equivalents
     let newPercentNum = calcApp.curNum/Math.pow(100,1);
     calcApp.curNum = newPercentNum;
     let dpPercentNum = calcApp.curNum * Math.pow(100, 1);
 
     let lastIndex = calcApp.display.textContent.length - 1;
+
     
     // if displayed num has no percent add a percent to the display
     if (calcApp.display.textContent[lastIndex] !== '%') {
@@ -134,27 +143,53 @@ calcApp.clickHandler = function(){
   } else if (this.className === 'mathSymbol') {
   // if + - × ÷ was clicked
     calcApp.clearBtn.textContent = 'C';
+    
+    let lastIndex = calcApp.display.textContent.length - 1;
+    // console.log(calcApp.display.textContent[lastIndex]);
+    
+    if (calcApp.display.textContent[lastIndex] === " ") {
+      // if displayed num already has a percent, show current dp num moved by 2 decimal places
+      let curDisplay = calcApp.display.textContent.split(" ");
+      curDisplay.splice(-2);
+      let newDisplay = curDisplay.join(" ");
+      calcApp.display.textContent = newDisplay + " " + btnClicked + " ";
+
+      calcApp.operators.pop();
+    } else {
+      
+      calcApp.display.textContent += " " + this.textContent + " ";
+    }
+    
+    if (calcApp.curNum === 'r' || calcApp.curNum === 0){
+      console.log('working?')
+      calcApp.nums.push(0);
+    } else if (calcApp.curNum) {
+      calcApp.nums.push(parseFloat(calcApp.curNum));
+    } 
+    
+    // console.log(calcApp.nums, calcApp.operators);
     calcApp.operators.push(btnClicked);
 
-    if (calcApp.curNum) {
-      calcApp.nums.push(parseFloat(calcApp.curNum));
-    }
-
-    // console.log(calcApp.nums, calcApp.operators);
-
-    calcApp.display.textContent += " " + this.textContent + " ";
     calcApp.curNum = "";
-      
+    console.log(calcApp.nums, calcApp.operators);
   } else if (!action || action === 'decimal') {
   // if a number button or the decimal button is clicked
     calcApp.clearBtn.textContent = 'C';
-
+    let lastIndex = calcApp.display.textContent.length - 1;
     // if string currently displayed is not '0' OR the decimal btn is clicked
     if (action && calcApp.isDecimal) {
       return;
     }
     
-    if (calcApp.curNum === 'r' && !action || calcApp.curNum === calcApp.result) {
+    if (calcApp.display.textContent[lastIndex] === '%') {
+      console.log('hi');
+      calcApp.curNum = btnClicked;
+      let curDisplay = calcApp.display.textContent.split(" ");
+      curDisplay.splice(-1);
+      let newDisplay = curDisplay.join(" ");
+      calcApp.display.textContent = newDisplay + " " + btnClicked;
+
+    } else if (calcApp.curNum === 'r' && !action || calcApp.curNum === calcApp.result) {
       // change curNum to <button> content
       calcApp.curNum = btnClicked;
       calcApp.display.textContent = btnClicked;
