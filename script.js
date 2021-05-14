@@ -3,7 +3,7 @@
 const calcApp = {};
 
 calcApp.clickHandler = function(){
-  
+
   let btnClicked = this.textContent;
   let action = this.dataset.action;
 
@@ -181,10 +181,41 @@ calcApp.clickHandler = function(){
   }
 }
 
+calcApp.changeTheme = function(){
+  const background = document.getElementsByTagName("main")[0];
+  const heading = document.getElementsByTagName("h1")[0];
+  const numDisplay = document.getElementsByClassName("display")[0];
+
+  console.log(numDisplay);
+  if (this.className === 'sun'){
+    console.log(this);
+    this.innerHTML = `
+    <img src="./assets/moon.png" alt="a simple moon icon">
+    `;
+  } else {
+    console.log(this);
+    this.innerHTML = `
+    <img src="./assets/sun.svg" alt="a simple sun icon">
+    `;
+  }
+
+  this.classList.toggle("sun");
+  this.classList.toggle("moon");
+  background.classList.toggle("day");
+  heading.classList.toggle("day");
+  numDisplay.classList.toggle("day");
+}
+
 // listen for button clicks
 calcApp.btnFunc = function(){
   for (btn of calcApp.btns) {
-    btn.addEventListener('click', calcApp.clickHandler);
+    if (btn.className === 'sun' || btn.className === 
+    'moon') {
+      console.log('sun or moon');
+      btn.addEventListener('click', calcApp.changeTheme);
+    } else {
+      btn.addEventListener('click', calcApp.clickHandler);
+    }
   }
 }
 
@@ -234,6 +265,7 @@ calcApp.init = function(){
   calcApp.dpArray = calcApp.nums.map((value) => {
     return value;
   });
+
 }
 
 calcApp.init();
