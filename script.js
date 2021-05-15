@@ -51,14 +51,17 @@ calcApp.clickHandler = function(){
     calcApp.calculate(calcApp.nums, calcApp.operators);
     calcApp.result = calcApp.calculate(calcApp.nums, calcApp.operators);
 
+    console.log(calcApp.display.textContent);
+    
+    // show result
     calcApp.display.textContent = calcApp.result;
+    calcApp.curNum = calcApp.result;
+    
+    // clear
     calcApp.nums = [];
     calcApp.operators = [];
-
-    // clear
-    calcApp.curNum = calcApp.result;
     calcApp.clearBtn.textContent = 'AC';
-    
+
   } else if (action === 'percent') {
   // if % button is clicked
     calcApp.clearBtn.textContent = 'C';
@@ -70,7 +73,8 @@ calcApp.clickHandler = function(){
     if (!calcApp.curNum) {
       return;
     }
-    console.log(calcApp.curNum);
+    // console.log(calcApp.curNum);
+    
     // change curNum and dpNum to their percent equivalents
     let newPercentNum = calcApp.curNum/Math.pow(100,1);
     calcApp.curNum = newPercentNum;
@@ -88,57 +92,76 @@ calcApp.clickHandler = function(){
       let curDisplay = calcApp.display.textContent.split(" ");
       curDisplay.splice(-1);
       let newDisplay = curDisplay.join(" ");
-      calcApp.display.textContent = newDisplay + " " + dpPercentNum + btnClicked;
+
+      if (calcApp.curNum < 0 && (calcApp.operators[calcApp.operators.length - 1] !== "-" || calcApp.operators[calcApp.operators.length - 1] !== "+")) {
+        dpPercentNum = Math.abs(dpPercentNum);
+        calcApp.display.textContent = newDisplay + " ⁻" + dpPercentNum + btnClicked;
+      } else {
+        calcApp.display.textContent = newDisplay + " " + dpPercentNum + btnClicked;
+      }
     }
     
   } else if (action === 'plusMinus') {
   // if +/- btn is clicked
     console.log(calcApp.nums);
     // console.log(calcApp.operators);
+    
+    if (calcApp.curNum === 'r') {
+      return;
+    }
+
     calcApp.clearBtn.textContent = 'C';
+
+    let curDisplay = calcApp.display.textContent.split(" ");
+
     // if string number is already a negative
     if (calcApp.curNum[0] === '-') {
       calcApp.curNum = calcApp.curNum.substring(1);
-      calcApp.curOp = '-';
-    
-    // if string number is positive
-    } else {
-      calcApp.curNum = '-' + calcApp.curNum;
-      calcApp.curOp = '+';
-    }
 
-    /*
-    // function to change the displayed operators
-    function changeDpOperator(){
-      if (calcApp.dpOperators.length < 1) {
-        return;
-      }
-
-      const lastOp = calcApp.dpOperators.length - 1;
-
-      if (calcApp.dpOperators[lastOp] === calcApp.curNum[0]) {
-        calcApp.dpOperators.splice(lastOp, 1, '+')
-        reprintOperator();
-      } else if (calcApp.dpOperators[lastOp] === '÷' || calcApp.dpOperators[lastOp] === '×') {
-        return;
+      if (calcApp.operators[calcApp.operators.length - 1] === "+") {
+        curDisplay.splice(-2);
+        let newDisplay = curDisplay.join(" ");
+        calcApp.display.textContent = newDisplay + " + " + calcApp.curNum;
+      } else if (calcApp.operators[calcApp.operators.length - 1] === "-"){
+        curDisplay.splice(-2);
+        let newDisplay = curDisplay.join(" ");
+        calcApp.display.textContent = newDisplay + " - " + calcApp.curNum;
       } else {
-        calcApp.dpOperators.splice(lastOp, 1, '-');
-        reprintOperator();
+        curDisplay.splice(-1);
+        let newDisplay = curDisplay.join(" ");
+        calcApp.display.textContent = newDisplay + " " + calcApp.curNum;
       }
+      
+    } else {
+      if (calcApp.operators[calcApp.operators.length - 1] === "+") {
+        console.log('multiplying!');
+        curDisplay.splice(-2);
+        let newDisplay = curDisplay.join(" ");
+        calcApp.display.textContent = newDisplay + " - " + calcApp.curNum;
+      } else if (calcApp.operators[calcApp.operators.length - 1] === "-") {
+        console.log('multiplying!');
+        curDisplay.splice(-2);
+        let newDisplay = curDisplay.join(" ");
+        calcApp.display.textContent = newDisplay + " + " + calcApp.curNum;
+      } else {
+        curDisplay.splice(-1);
+        let newDisplay = curDisplay.join(" ");
+        calcApp.display.textContent = newDisplay + " ⁻" + calcApp.curNum;
+      } 
 
-      // console.log(calcApp.dpArray);
+      calcApp.curNum = '-' + calcApp.curNum;
 
-    // reprint the display with the operator changed visually
-    function reprintOperator(){
-      console.log(`real: ${calcApp.operators} | display: ${calcApp.dpOperators}`);
-      // calcApp.display.textContent = ;
-      // calcApp.dpOperators.map()
     }
-    */
 
 
+    
+    // console.log(calcApp.display.textContent)
+    // let curDisplay = calcApp.display.textContent.split(" ");
+    // curDisplay.splice(-2);
+    // let newDisplay = curDisplay.join(" ");
+    // console.log(newDisplay + " ⁻ " + calcApp.curNum);
 
-    // console.log(parseFloat(calcApp.curNum));
+
 
   } else if (this.className === 'mathSymbol') {
   // if + - × ÷ was clicked
@@ -290,8 +313,7 @@ calcApp.init = function(){
 
   calcApp.nums = [];
   calcApp.operators = [];
-  // calcApp.dpOperators = [];
-  calcApp.curOp = '';
+
   // calcApp.result = 'r';
   
   // call functions
