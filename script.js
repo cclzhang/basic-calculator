@@ -200,7 +200,7 @@ calcApp.clickHandler = function(){
     calcApp.clearBtn.textContent = 'C';
     let lastIndex = calcApp.display.textContent.length - 1;
 
-    if (calcApp.curNum.includes(".") && btnClicked === '.') {
+    if ((btnClicked === '.' && calcApp.display.textContent[lastIndex] === '%') || (calcApp.curNum.includes(".") && btnClicked === '.')) {
       return;
     }
 
