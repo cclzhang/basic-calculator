@@ -199,40 +199,51 @@ calcApp.clickHandler = function(){
   // if a number button or the decimal button is clicked
     calcApp.clearBtn.textContent = 'C';
     let lastIndex = calcApp.display.textContent.length - 1;
-    // if string currently displayed is not '0' OR the decimal btn is clicked
-    if (action && calcApp.isDecimal) {
+
+    if (calcApp.curNum.includes(".") && btnClicked === '.') {
       return;
     }
-    
+
+    // check if percented
     if (calcApp.display.textContent[lastIndex] === '%') {
-      console.log('hi');
       calcApp.curNum = btnClicked;
       let curDisplay = calcApp.display.textContent.split(" ");
       curDisplay.splice(-1);
       let newDisplay = curDisplay.join(" ");
       calcApp.display.textContent = newDisplay + " " + btnClicked;
-
+      
     } else if (calcApp.curNum === 'r' && !action || calcApp.curNum === calcApp.result) {
+      // check if curNum is original or result and decimal is not clicked 
+
       // change curNum to <button> content
       calcApp.curNum = btnClicked;
       calcApp.display.textContent = btnClicked;
       console.log(calcApp.curNum);
+      
+    } else if (action && calcApp.curNum === 'r' || (action && calcApp.curNum === '0')) {
+      // check if decimal is clicked and num is zero
 
-    } else if (action && calcApp.curNum === 'r') {
-        calcApp.isDecimal = true;
-        calcApp.curNum = '0' + btnClicked;
-        calcApp.display.textContent += btnClicked;
+      // if string currently displayed is not '0' OR the decimal btn is clicked
+      calcApp.curNum = '0' + btnClicked;
+      calcApp.display.textContent += btnClicked;
 
     } else if (action && !calcApp.curNum) {
-        calcApp.isDecimal = true;
-        calcApp.curNum = '0' + btnClicked;
-        calcApp.display.textContent += "0" + btnClicked;
-        console.log(calcApp.curNum);
+      // check if decimal is clicked and curNum is empty
+
+      calcApp.curNum = '0' + btnClicked;
+      calcApp.display.textContent += "0" + btnClicked;
+      console.log(calcApp.curNum);
 
     } else {
-      // change curNum to 'curNum' + '<button> content'
-      calcApp.curNum += btnClicked;
-      calcApp.display.textContent += btnClicked;
+
+      // if (calcApp.curNum.includes(".")) {
+      //   console.log('do nothing');
+      // } else {
+
+        // change curNum to 'curNum' + '<button> content'
+        calcApp.curNum += btnClicked;
+        calcApp.display.textContent += btnClicked;
+      // }
 
       console.log(calcApp.curNum);
     }
@@ -308,7 +319,6 @@ calcApp.init = function(){
   calcApp.clearBtn = document.querySelector('[data-action=clear]');
   
   // other variables
-  calcApp.isDecimal = false;
   calcApp.curNum = 'r';
 
   calcApp.nums = [];
