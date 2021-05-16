@@ -46,15 +46,19 @@ calcApp.clickHandler = function(){
   } else if (action === 'calculate') {
   // if = button is clicked
     calcApp.nums.push(parseFloat(calcApp.curNum));
-    console.log(calcApp.nums, calcApp.operators);
-
-    calcApp.calculate(calcApp.nums, calcApp.operators);
+    // console.log(calcApp.nums, calcApp.operators);
+    
     calcApp.result = calcApp.calculate(calcApp.nums, calcApp.operators);
 
-    console.log(calcApp.display.textContent);
+
+    if (calcApp.result.toString().includes(".") && calcApp.result.toString().split(".")[1].length > 7) {
+      calcApp.display.textContent = calcApp.result.toFixed(5);
+    } else {
+      calcApp.display.textContent = calcApp.result;
+    }
     
+
     // show result
-    calcApp.display.textContent = calcApp.result;
     calcApp.curNum = calcApp.result;
     
     // clear
@@ -280,7 +284,6 @@ calcApp.btnFunc = function(){
   for (btn of calcApp.btns) {
     if (btn.className === 'sun' || btn.className === 
     'moon') {
-      console.log('sun or moon');
       btn.addEventListener('click', calcApp.changeTheme);
     } else {
       btn.addEventListener('click', calcApp.clickHandler);
@@ -288,9 +291,9 @@ calcApp.btnFunc = function(){
   }
 }
 
-calcApp.calculate = function(num, op){
+calcApp.miniCalculate = function(num, op){
   let result = num[0];
-  for (i = 0; i < op.length; i++){
+  for (let i = 0; i < op.length; i++){
     switch (op[i]) {
       case "+": result += num[i + 1]; break;
       case "-": result -= num[i + 1]; break;
@@ -302,14 +305,64 @@ calcApp.calculate = function(num, op){
   return result;
 }
 
-// calcApp.toDisplay = function (...items) {
-//   calcApp.displayBox = items;
-//   console.log(calcApp.displayBox);
-// }
+const testNums = [0.01, 2.3, -3.6, 4.2, 0.00005, -6, 7, -8, 9];
+const testOps = ["+", "-", "×", "÷", "×", "-", "×", "÷"]
 
-calcApp.print = function(){
-  console.log('display string variable/array onto the page')
+calcApp.calculate = function (num, op){
+  let startIndex = null;
+  let endIndex = null;
+
+  let finalNum = [];
+  let finalOp = [];
+
+  let isTracking = false;
+
+  // loop through operators array
+  for (let i = 0; i < op.length; i++){
+    if (op[i] === "×" || op[i] === "÷"){
+      if(!isTracking) {
+        startIndex = i;
+        isTracking = true;
+      } 
+
+      if (i === op.length - 1) {
+        endIndex = i + 1;
+        isTracking = false;
+        const newOp = op.slice(startIndex, endIndex);
+        const newNums = num.slice(startIndex, (endIndex + 1));
+
+        finalNum.push(calcApp.miniCalculate(newNums, newOp));
+      }
+    } else {
+      // if current op is + or -
+      if(isTracking) {
+        endIndex = i;
+        isTracking = false;
+        const newOp = op.slice(startIndex, endIndex);
+        const newNums = num.slice(startIndex, (endIndex + 1));
+
+        finalNum.push(calcApp.miniCalculate(newNums, newOp));
+
+      } else {
+        finalNum.push(num[i]);
+      }
+      finalOp.push(op[i]);
+    }
+    
+  }
+  
+  if (op[op.length - 1] === "+" || op[op.length - 1] === "-") {
+    finalNum.push(num[num.length - 1]);
+  }
+  
+  return calcApp.miniCalculate(finalNum, finalOp);
+  // console.log(calcApp.miniCalculate(finalNum, finalOp));
+  // console.log(finalNum, finalOp);
+  // console.log(num, op);
+
 }
+
+// calcApp.calculate(testNums, testOps);
 
 
 calcApp.init = function(){
