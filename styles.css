@@ -82,8 +82,8 @@ h1 {
 }
 
 h1.day {
-  color: rgb(255, 221, 217);
-  text-shadow: 4px 4px transparent;
+  color: slategray;
+  text-shadow: 4px 4px mistyrose;
 }
 
 h1::selection {
@@ -156,7 +156,7 @@ main button:hover {
 }
 
 .display.day {
-  border: 3px solid mistyrose;
+  box-shadow: 3px 3px rgb(139, 156, 173), -2px -2px mistyrose;
 }
 
 .display p {
@@ -203,6 +203,11 @@ a:hover {
   main button, .display {
     font-size: 2.2rem;
   }
+
+  .display.day {
+    box-shadow: 4px 4px rgb(139, 156, 173), -3px -3px mistyrose;
+  }
+
   footer {
     font-size: 1.5rem;
   }
