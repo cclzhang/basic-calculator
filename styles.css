@@ -18,9 +18,9 @@ html {
 }
 
 body {
+  font-family: 'Courier New', monospace;
   color: mistyrose;
   font-size: 1.6rem;
-  font-family: monospace;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -34,13 +34,13 @@ main {
   flex: 2;
   padding: 20px 0;
   height: max-content;
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 main.day {
-  background: white;
+  background: rgba(255, 228, 225, 0.3);
 }
 
 img {

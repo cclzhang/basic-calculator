@@ -1,8 +1,7 @@
-# A Simple Calculator
+# [A Simple Calculator](https://cclzhang.github.io/basic-calculator/)
 
 A modern calculator to solve your modern needs. Written in vanilla JavaScript, this app provides basic calculator functionality while providing a sleek and minimalist look.
 
-<!-- ![image of the calculator](./assets/calculator-image.png) -->
   
 ## Features
 + Offers basic operations and displays all commands as they are entered

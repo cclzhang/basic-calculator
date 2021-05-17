@@ -52,14 +52,25 @@ calcApp.clickHandler = function(){
 
 
     if (calcApp.result.toString().includes(".") && calcApp.result.toString().split(".")[1].length > 7) {
-      calcApp.display.textContent = calcApp.result.toFixed(5);
+      if (calcApp.result < 0) {
+        const toDisplay = "⁻" + Math.abs(calcApp.result.toFixed(5));
+        calcApp.display.textContent = toDisplay;
+
+      } else {
+        calcApp.display.textContent = calcApp.result.toFixed(5);
+      }
     } else {
-      calcApp.display.textContent = calcApp.result;
+      if (calcApp.result < 0) {
+        calcApp.display.textContent = "⁻" + Math.abs(calcApp.result);
+
+      } else {
+        calcApp.display.textContent = calcApp.result;
+      }
     }
     
 
     // show result
-    calcApp.curNum = calcApp.result;
+    calcApp.curNum = calcApp.result.toString();
     
     // clear
     calcApp.nums = [];
@@ -119,8 +130,12 @@ calcApp.clickHandler = function(){
     let curDisplay = calcApp.display.textContent.split(" ");
 
     // if string number is already a negative
-    if (calcApp.curNum[0] === '-') {
-      calcApp.curNum = calcApp.curNum.substring(1);
+    if (calcApp.curNum[0] === '-' || calcApp.curNum < 0) {
+      if (calcApp.curNum[0] === '-') {
+        calcApp.curNum = calcApp.curNum.substring(1);
+      } else {
+        calcApp.curNum = Math.abs(calcApp.curNum);
+      }
 
       if (calcApp.operators[calcApp.operators.length - 1] === "+") {
         curDisplay.splice(-2);
