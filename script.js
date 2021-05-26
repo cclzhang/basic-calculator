@@ -45,11 +45,15 @@ calcApp.clickHandler = function(){
 
   } else if (action === 'calculate') {
   // if = button is clicked
-    calcApp.nums.push(parseFloat(calcApp.curNum));
-    // console.log(calcApp.nums, calcApp.operators);
+  // console.log(calcApp.nums, calcApp.operators);
+  
+    if (calcApp.display.textContent[calcApp.display.textContent.length - 2] === ("+" || "-" || "×" || "÷")) {
+      calcApp.operators.pop();
+    } else {
+      calcApp.nums.push(parseFloat(calcApp.curNum));
+    }
     
     calcApp.result = calcApp.calculate(calcApp.nums, calcApp.operators);
-
 
     if (calcApp.result.toString().includes(".") && calcApp.result.toString().split(".")[1].length > 7) {
       if (calcApp.result < 0) {
