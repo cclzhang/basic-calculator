@@ -10,6 +10,6 @@ A modern calculator to solve your modern needs. Written in vanilla JavaScript, t
 
 ## License
 
-Copyright &copy; Cecile Zhang. All rights reserved.
+Copyright &copy; [Cecile Zhang](http://cecilezhang.com). All rights reserved.
 
 Licensed under the [MIT License](./LICENSE).
