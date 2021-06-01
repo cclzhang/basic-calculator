@@ -5,8 +5,9 @@ A modern calculator to solve your modern needs. Written in vanilla JavaScript, t
   
 ## Features
 + Offers basic operations and displays all commands as they are entered
-+ Ability to change displayed value from positive to negative and vice versa
-+ Can immediately calculate the percentage from the displayed value and use value in further operations
++ Ability to toggle value from positive to negative
++ Can use final result in additional operations
++ Calculates based on order of operations
 
 ## License
 
