@@ -215,7 +215,7 @@ calcApp.clickHandler = function(){
       let newDisplay = curDisplay.join(" ");
       calcApp.display.textContent = newDisplay + " " + btnClicked;
       
-    } else if (calcApp.curNum === 'r' && !action || calcApp.curNum === calcApp.result) {
+    } else if (calcApp.curNum === 'r' && !action || calcApp.curNum === calcApp.result.toString()) {
       // check if curNum is original or result and decimal is not clicked 
 
       // change curNum to <button> content
@@ -352,11 +352,9 @@ calcApp.init = function(){
   
   // other variables
   calcApp.curNum = 'r';
-
   calcApp.nums = [];
   calcApp.operators = [];
-
-  // calcApp.result = 'r';
+  calcApp.result = 'r';
   
   // call functions
   calcApp.btnFunc();
