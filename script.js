@@ -46,7 +46,6 @@ calcApp.clickHandler = function(){
   } else if (action === 'calculate') {
   // if = button is clicked
     calcApp.nums.push(parseFloat(calcApp.curNum));
-    // console.log(calcApp.nums, calcApp.operators);
     
     calcApp.result = calcApp.calculate(calcApp.nums, calcApp.operators);
 
@@ -88,7 +87,6 @@ calcApp.clickHandler = function(){
     if (!calcApp.curNum) {
       return;
     }
-    // console.log(calcApp.curNum);
     
     // change curNum and dpNum to their percent equivalents
     let newPercentNum = calcApp.curNum/Math.pow(100,1);
@@ -118,8 +116,6 @@ calcApp.clickHandler = function(){
     
   } else if (action === 'plusMinus') {
   // if +/- btn is clicked
-    console.log(calcApp.nums);
-    // console.log(calcApp.operators);
     
     if (calcApp.curNum === 'r') {
       return;
@@ -153,12 +149,10 @@ calcApp.clickHandler = function(){
       
     } else {
       if (calcApp.operators[calcApp.operators.length - 1] === "+") {
-        console.log('multiplying!');
         curDisplay.splice(-2);
         let newDisplay = curDisplay.join(" ");
         calcApp.display.textContent = newDisplay + " - " + calcApp.curNum;
       } else if (calcApp.operators[calcApp.operators.length - 1] === "-") {
-        console.log('multiplying!');
         curDisplay.splice(-2);
         let newDisplay = curDisplay.join(" ");
         calcApp.display.textContent = newDisplay + " + " + calcApp.curNum;
@@ -172,22 +166,11 @@ calcApp.clickHandler = function(){
 
     }
 
-
-    
-    // console.log(calcApp.display.textContent)
-    // let curDisplay = calcApp.display.textContent.split(" ");
-    // curDisplay.splice(-2);
-    // let newDisplay = curDisplay.join(" ");
-    // console.log(newDisplay + " ⁻ " + calcApp.curNum);
-
-
-
   } else if (this.className === 'mathSymbol') {
   // if + - × ÷ was clicked
     calcApp.clearBtn.textContent = 'C';
     
     let lastIndex = calcApp.display.textContent.length - 1;
-    // console.log(calcApp.display.textContent[lastIndex]);
     
     if (calcApp.display.textContent[lastIndex] === " ") {
       // if displayed num already has a percent, show current dp num moved by 2 decimal places
@@ -203,17 +186,14 @@ calcApp.clickHandler = function(){
     }
     
     if (calcApp.curNum === 'r' || calcApp.curNum === 0){
-      console.log('working?')
       calcApp.nums.push(0);
     } else if (calcApp.curNum) {
       calcApp.nums.push(parseFloat(calcApp.curNum));
     } 
     
-    // console.log(calcApp.nums, calcApp.operators);
     calcApp.operators.push(btnClicked);
 
     calcApp.curNum = "";
-    console.log(calcApp.nums, calcApp.operators);
   } else if (!action || action === 'decimal') {
   // if a number button or the decimal button is clicked
     calcApp.clearBtn.textContent = 'C';
@@ -237,7 +217,6 @@ calcApp.clickHandler = function(){
       // change curNum to <button> content
       calcApp.curNum = btnClicked;
       calcApp.display.textContent = btnClicked;
-      console.log(calcApp.curNum);
       
     } else if (action && calcApp.curNum === 'r' || (action && calcApp.curNum === '0')) {
       // check if decimal is clicked and num is zero
@@ -251,20 +230,12 @@ calcApp.clickHandler = function(){
 
       calcApp.curNum = '0' + btnClicked;
       calcApp.display.textContent += "0" + btnClicked;
-      console.log(calcApp.curNum);
 
     } else {
 
-      // if (calcApp.curNum.includes(".")) {
-      //   console.log('do nothing');
-      // } else {
-
-        // change curNum to 'curNum' + '<button> content'
-        calcApp.curNum += btnClicked;
-        calcApp.display.textContent += btnClicked;
-      // }
-
-      console.log(calcApp.curNum);
+      // change curNum to 'curNum' + '<button> content'
+      calcApp.curNum += btnClicked;
+      calcApp.display.textContent += btnClicked;
     }
   }
 }
@@ -274,7 +245,6 @@ calcApp.changeTheme = function(){
   const heading = document.getElementsByTagName("h1")[0];
   const numDisplay = document.getElementsByClassName("display")[0];
 
-  console.log(numDisplay);
   if (this.className === 'sun'){
     this.innerHTML = `
     <img src="./assets/moon.png" alt="a simple moon icon">
@@ -369,13 +339,8 @@ calcApp.calculate = function (num, op){
   }
   
   return calcApp.miniCalculate(finalNum, finalOp);
-  // console.log(calcApp.miniCalculate(finalNum, finalOp));
-  // console.log(finalNum, finalOp);
-  // console.log(num, op);
 
 }
-
-// calcApp.calculate(testNums, testOps);
 
 
 calcApp.init = function(){
