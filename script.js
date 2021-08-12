@@ -45,10 +45,18 @@ calcApp.clickHandler = function(){
 
   } else if (action === 'calculate') {
   // if = button is clicked
+<<<<<<< HEAD
     calcApp.nums.push(parseFloat(calcApp.curNum));
+=======
+  
+    if (calcApp.display.textContent[calcApp.display.textContent.length - 2] === ("+" || "-" || "×" || "÷")) {
+      calcApp.operators.pop();
+    } else {
+      calcApp.nums.push(parseFloat(calcApp.curNum));
+    }
+>>>>>>> final-fixes
     
     calcApp.result = calcApp.calculate(calcApp.nums, calcApp.operators);
-
 
     if (calcApp.result.toString().includes(".") && calcApp.result.toString().split(".")[1].length > 7) {
       if (calcApp.result < 0) {
@@ -161,11 +169,14 @@ calcApp.clickHandler = function(){
         let newDisplay = curDisplay.join(" ");
         calcApp.display.textContent = newDisplay + " ⁻" + calcApp.curNum;
       } 
-
       calcApp.curNum = '-' + calcApp.curNum;
-
     }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> final-fixes
   } else if (this.className === 'mathSymbol') {
   // if + - × ÷ was clicked
     calcApp.clearBtn.textContent = 'C';
@@ -194,6 +205,10 @@ calcApp.clickHandler = function(){
     calcApp.operators.push(btnClicked);
 
     calcApp.curNum = "";
+<<<<<<< HEAD
+=======
+
+>>>>>>> final-fixes
   } else if (!action || action === 'decimal') {
   // if a number button or the decimal button is clicked
     calcApp.clearBtn.textContent = 'C';
@@ -232,10 +247,15 @@ calcApp.clickHandler = function(){
       calcApp.display.textContent += "0" + btnClicked;
 
     } else {
+<<<<<<< HEAD
 
       // change curNum to 'curNum' + '<button> content'
       calcApp.curNum += btnClicked;
       calcApp.display.textContent += btnClicked;
+=======
+        calcApp.curNum += btnClicked;
+        calcApp.display.textContent += btnClicked;
+>>>>>>> final-fixes
     }
   }
 }
@@ -339,7 +359,10 @@ calcApp.calculate = function (num, op){
   }
   
   return calcApp.miniCalculate(finalNum, finalOp);
+<<<<<<< HEAD
 
+=======
+>>>>>>> final-fixes
 }
 
 
